@@ -1,10 +1,10 @@
 <html><head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-canvas {
-    border:1px solid #d3d3d3;
-    background-color: #f1f1f1;
-}
+/*canvas {*/
+/*    border:1px solid #d3d3d3;*/
+/*    background-color: #f1f1f1;*/
+/*}*/
 </style>
 </head>
 <body onload="startGame()" contenteditable="false"><canvas width="480" height="270"></canvas>
@@ -18,12 +18,12 @@ var pigsImage;
 
 function startGame() {
     // Background image
-    var pigsReady = false;
-    var pigsImage = new Image();
+    pigsReady = false;
+    pigsImage = new Image();
     pigsImage.onload = function () {
 	pigsReady = true;
     };
-    pigsImage.src = "pigs.png";
+    pigsImage.src = "static/pieflyer/images/pigs.png";
     myGamePiece = new component(30, 30, "red", 10, 120);
     myGamePiece.gravity = 0.05;
     myScore = new component("30px", "Consolas", "black", 280, 40, "text");
@@ -63,11 +63,11 @@ function component(width, height, color, x, y, type) {
             ctx.fillStyle = color;
             ctx.fillText(this.text, this.x, this.y);
         } else {
-            //ctx.fillStyle = color;
-            //ctx.fillRect(this.x, this.y, this.width, this.height);
-            if (pigsReady) {
-	    	ctx.drawImage(pigsImage, 0, 0);
-	        }
+            ctx.fillStyle = color;
+            ctx.fillRect(this.x, this.y, this.width, this.height);
+            //if (pigsReady) {
+	    	//ctx.drawImage(pigsImage, 0, 0);
+	        //}
             
         }
     }
@@ -141,26 +141,33 @@ function accelerate(n) {
 }
 </script>
 <br>
-<button onmousedown="accelerate(-0.2)" onmouseup="accelerate(0.5)">ACCELERATE</button>
+<button onmousedown="accelerate(-0.2)" onmouseup="accelerate(0.1)">ACCELERATE</button>
 <p>Use the ACCELERATE button to stay in the air</p>
 <p>How long can you stay alive?</p>
 
 
 {% load staticfiles %}
 
-<link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'pieflyer/style.css' %}" />
 
 
 
 {% if highest_score_list %}
     <ul>
     {% for score_obj in highest_score_list %}
-        <li>{{ score_obj.score }}</li>
+        <li>{{ score_obj.name }}</li>
     {% endfor %}
     </ul>
 {% else %}
     <p>No polls are available.</p>
 {% endif %}
+
+
+<form action="{% url 'pieflyer:game' recycled_score.id %}" method="post">
+
+<input type="text" name="playerName" value="Your Name Here"/><br />
+<input type="submit" value="Submit" />
+</form>
 
 
 

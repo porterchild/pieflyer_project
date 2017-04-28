@@ -8,7 +8,8 @@ class Score(models.Model):
     #def __str__(self):
     #    self.score_list = self.score_list.sorted()
     #    return [self.score_list[i] for i in xrange(0, len(self.score_list))] 
-    score = 0
+    score = models.IntegerField(default=0)
+    playerName = models.CharField(max_length=200, default='Anonymous Player')
     def __str__(self):
         return self.score
     
