@@ -6,22 +6,23 @@ from .models import Score
 from django.core.urlresolvers import reverse
 
 # Create your views here.
-def game(request):
-    template = loader.get_template("pieflyer/gamedoc.html")
+def index(request):
+    #template = loader.get_template("pieflyer/gamedoc.html")
     
     highest_score_list = Score.objects.order_by('-score')[:5]
-    new_scorer = Score.objects.get_or_create("")
+    new_scorer = Score.objects.get_or_create(playerName = "")
+    print "hellooooooooooooooooooooo1"
     context = {'highest_score_list': highest_score_list, 'new_scorer': new_scorer}
     
     
     return render(request, 'pieflyer/gamedoc.html', context)
 
-def record_score(request, score_id):
-    score = get_object_or_404(Score, pk=score_id)
+def record_score(request, new_scorer_id):
+    print "hellooooooooooooooooooooo2"
+    score = get_object_or_404(Score, pk=new_scorer_id)
     score.playerName = score.get(pk=request.POST['new_scorer'])
-    score.save
-    
-    return HttpResponseRedirect(reverse('pieflyer:game'))
+    score.save()
+    return HttpResponseRedirect(reverse('pieflyer:index'))
     
 # def vote(request, question_id):
 #     question = get_object_or_404(Question, pk=question_id)

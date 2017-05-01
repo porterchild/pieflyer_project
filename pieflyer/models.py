@@ -12,6 +12,9 @@ class Score(models.Model):
     playerName = models.CharField(max_length=200, default='Anonymous Player')
     def __str__(self):
         return self.score
+    def __unicode__(self):
+      return '%s' % ([self.playerName, self.score])
+        # return '%s' % (self.score)
     
 class Question(models.Model):
     question_text = models.CharField(max_length=200)

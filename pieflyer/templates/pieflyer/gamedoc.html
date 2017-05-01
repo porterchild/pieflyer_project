@@ -1,3 +1,4 @@
+
 <html><head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
@@ -6,6 +7,8 @@
 /*    background-color: #f1f1f1;*/
 /*}*/
 </style>
+<link rel="stylesheet" type="text/css" href= "pieflyer/style.css" />
+
 </head>
 <body onload="startGame()" contenteditable="false"><canvas width="480" height="270"></canvas>
 <script>
@@ -147,28 +150,28 @@ function accelerate(n) {
 <p>This game is a copy of the one at: <a href=https://www.w3schools.com/graphics/tryit.asp?filename=trygame_default_gravity>w3schools</a>, with a few modifications.</p>
 
 
-{% load staticfiles %}
-
-<link rel="stylesheet" type="text/css" href="{% static 'pieflyer/style.css' %}" />
 
 
 
+<form action="https://pieflyer-project-porterchild.c9users.io/record_score/" method="post">
+{% csrf_token %}
+<input type="text" name="new_scorer" value="Your Name Here"/><br />
+<input type="hidden" name=myGameArea.frameNo>
+<input type="submit" value="Submit" />
+</form>
+
+<h2>High Scores:</h2>
 {% if highest_score_list %}
     <ul>
     {% for score_obj in highest_score_list %}
-        <li>{{ score_obj.name }}</li>
+        <li>{{ score_obj.playerName }}</li>
     {% endfor %}
     </ul>
 {% else %}
-    <p>No polls are available.</p>
+    <p>No high scores are available.</p>
 {% endif %}
 
 
-<form action="{% url 'pieflyer:record_score' new_scorer.id %}" method="post">
-
-<input type="text" name="new_scorer.playerName" value="Your Name Here"/><br />
-<input type="submit" value="Submit" />
-</form>
 
 
 

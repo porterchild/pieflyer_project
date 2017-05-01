@@ -19,5 +19,6 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', include('pieflyer.urls')),
+    url(r'^', include('pieflyer.urls')),
+    url(r'^pieflyer/', include('pieflyer.urls')),
 ]
