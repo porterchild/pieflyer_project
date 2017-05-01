@@ -2,10 +2,10 @@
 <html><head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-/*canvas {*/
-/*    border:1px solid #d3d3d3;*/
-/*    background-color: #f1f1f1;*/
-/*}*/
+
+body {
+    background-color: lightblue;
+}
 </style>
 <link rel="stylesheet" type="text/css" href= "pieflyer/style.css" />
 
@@ -153,7 +153,7 @@ function accelerate(n) {
 
 
 
-<form action="https://pieflyer-project-porterchild.c9users.io/record_score/" method="post">
+<form action="{% url 'pieflyer:record_score'%}" method="post">
 {% csrf_token %}
 <input type="text" name="new_scorer" value="Your Name Here"/><br />
 <input type="hidden" name=myGameArea.frameNo>
@@ -164,7 +164,7 @@ function accelerate(n) {
 {% if highest_score_list %}
     <ul>
     {% for score_obj in highest_score_list %}
-        <li>{{ score_obj.playerName }}</li>
+        <li>{{ score_obj.playerName }}: {{score_obj.score}}</li>
     {% endfor %}
     </ul>
 {% else %}
