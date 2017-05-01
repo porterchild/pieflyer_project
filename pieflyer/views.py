@@ -1,23 +1,27 @@
-from django.shortcuts import render, render_to_response
-from django.http import HttpResponse
+from django.shortcuts import render, render_to_response, get_object_or_404
+from django.http import HttpResponse, HttpResponseRedirect
 from django.template import Context, loader
 from .models import Score
+
+from django.core.urlresolvers import reverse
 
 # Create your views here.
 def game(request):
     template = loader.get_template("pieflyer/gamedoc.html")
     
     highest_score_list = Score.objects.order_by('-score')[:5]
-    if len(highest_score_list) is 6:
-        recycled_score = Score.objects.values_list()[5]
-    context = {'highest_score_list': highest_score_list, 'recycled_score': recycled_score}
+    new_scorer = Score.objects.get_or_create("")
+    context = {'highest_score_list': highest_score_list, 'new_scorer': new_scorer}
     
     
     return render(request, 'pieflyer/gamedoc.html', context)
 
-def index(request):
-    highest_score_list = Score.objects.order_by('-score')[:5]
-    context = {'highest_score_list': highest_score_list}
+def record_score(request, score_id):
+    score = get_object_or_404(Score, pk=score_id)
+    score.playerName = score.get(pk=request.POST['new_scorer'])
+    score.save
+    
+    return HttpResponseRedirect(reverse('pieflyer:game'))
     
 # def vote(request, question_id):
 #     question = get_object_or_404(Question, pk=question_id)

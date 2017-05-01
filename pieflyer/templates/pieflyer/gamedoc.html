@@ -144,6 +144,7 @@ function accelerate(n) {
 <button onmousedown="accelerate(-0.2)" onmouseup="accelerate(0.1)">ACCELERATE</button>
 <p>Use the ACCELERATE button to stay in the air</p>
 <p>How long can you stay alive?</p>
+<p>This game is a copy of the one at: <a href=https://www.w3schools.com/graphics/tryit.asp?filename=trygame_default_gravity>w3schools</a>, with a few modifications.</p>
 
 
 {% load staticfiles %}
@@ -163,9 +164,9 @@ function accelerate(n) {
 {% endif %}
 
 
-<form action="{% url 'pieflyer:game' recycled_score.id %}" method="post">
+<form action="{% url 'pieflyer:record_score' new_scorer.id %}" method="post">
 
-<input type="text" name="playerName" value="Your Name Here"/><br />
+<input type="text" name="new_scorer.playerName" value="Your Name Here"/><br />
 <input type="submit" value="Submit" />
 </form>
 
